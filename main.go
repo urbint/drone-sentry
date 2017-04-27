@@ -67,11 +67,13 @@ func main() {
 
 	// sends the message
 	if err := client.CreateRelease(&release); err != nil {
+		fmt.Println("Error creating release")
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	if err2 := client.CreateDeploy(&deploy); err2 != nil {
+		fmt.Println("Error creating deploy")
 		fmt.Println(err)
 		os.Exit(1)
 	}

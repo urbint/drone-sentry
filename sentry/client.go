@@ -36,12 +36,8 @@ func (c *client) CreateRelease(msg *Release) error {
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer " + c.api_key)
-	fmt.Println(req)
 
 	resp, err := http.DefaultClient.Do(req)
-
-	fmt.Println(resp)
-
 
 	if err != nil {
 		return err
