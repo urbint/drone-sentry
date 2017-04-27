@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"fmt"
 )
 
 type Client interface {
@@ -28,13 +29,19 @@ func (c *client) CreateRelease(msg *Release) error {
 	buf := bytes.NewReader(body)
 
 	req, err := http.NewRequest("POST",
-		"https://sentry.io/api/0/projects/" + c.org + "/" + c.project + "/releases", buf)
+		"https://sentry.io/api/0/projects/" + c.org + "/" + c.project + "/releases/",
+		buf)
 	if err != nil {
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer " + c.api_key)
+	fmt.Println(req)
+
 	resp, err := http.DefaultClient.Do(req)
+
+	fmt.Println(resp)
+
 
 	if err != nil {
 		return err
@@ -57,7 +64,7 @@ func (c *client) CreateDeploy(msg *Deploy) error {
 
 	req, err := http.NewRequest("POST",
 		"https://sentry.io/api/0/organizations/" + c.org +
-			"/releases/" + msg.Name + "/deploys", buf)
+			"/releases/" + msg.Name + "/deploys/", buf)
 	if err != nil {
 		return err
 	}
